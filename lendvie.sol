@@ -9,6 +9,8 @@ contract Lendvie {
     mapping (address => Loan[]) credits; //uses Loan[] so a user can have more than
                                          //one active loan with the same user
     mapping (address => Loan[]) debts;
+    mapping  (address => PendingLoan[]) pendingCredits;
+    mapping (address => PendingLoan[]) pendingDebts;
   }
 
   struct Loan {
@@ -18,7 +20,18 @@ contract Lendvie {
     uint amountBorrowed;
     uint amountDue;
     uint amountRemaining;
+    uint timeStarted;
     //TODO add additional information about the loan
+  }
+
+  struct PendingLoan {
+    Loan loan;
+  }
+
+  struct Payment {
+    uint paymentFrequency;
+    uint paymentAmount;
+    uint interest;
   }
 
   uint public loanCount; //this is just informational so it can be deleted later to save gas
@@ -34,6 +47,14 @@ contract Lendvie {
 
   function userExists(address addr) public view returns(bool exists) {
     return users[addr].isActive;
+  }
+
+  function initiateLoanLender(address borrower, uint amount) {
+  //TODO
+  }
+
+  function initiateLoanBorrower(address lender, uint amount) {
+  //TODO
   }
 
   //TODO examine any potential security vulnerabilities with this function
